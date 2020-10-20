@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+
+<title>Planner</title>
+<meta charset="UTF-8">
+<meta name="viewport" planner="width=device-width, initial-scale=1">
+
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+  *:focus {
+    outline: none;
+  }
+  .days span {
+    position:relative;
+    padding: 5px;
+    padding-left: 0;
+    font-size: 15px;
+    text-align: center;
+  }
+  #m {
+    left: 6vw;
+  }
+  #t {
+    left: 20vw
+  }
+  #w {
+    left: 34vw
+  }
+  #th {
+    left: 48vw;
+  }
+  #f {
+    left: 65vw;
+  }
+  .days {
+    padding: 10px 0px 0px 15px;
+  }
+  .notes {
+    padding: 0px 0px 0px 15px;
+  }
+  textarea {
+    resize: none;
+    height: 75vh;
+    width: calc((100vw / 5) - 5px);
+    margin-left:-6px;
+  }
+
+body {
+-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+
+  .wrapper {
+    width:100vw;
+    height: 50px;
+    background: #0c0d0e;
+    padding: 10px;
+    position:fixed;
+    top:0; left:0;
+    color: white;
+    text-align: center;
+  }
+  .wrapper span {
+    position: relative;
+    padding: 5px;
+    top: 4px;
+  }
+  .content {
+    margin-top: 50px;
+    margin-left:0;
+  }
+  #save {
+   position: fixed;
+   right: 20px;
+   bottom: 15px;
+   width: 200px;
+   height: 60px;
+  }
+  #info {
+   position: fixed;
+   bottom: 10px;
+   left: 10px;
+   color: #330fb2;
+  }
+  header button {
+    position: absolute;
+    top: 0;
+    height: 50px;
+    cursor: pointer;
+    background: #0c0d0e;
+    color: white;
+    border: 1px solid rgba(255,255,255,0);
+    transition: 0.25s ease all;
+  }
+  #home {
+    left: 10px;
+  }
+  #classes {
+    left: 72px;
+  }
+  #resources {
+    left: 140px;
+  }
+  header button:hover {
+    border: 1px solid rgba(255,255,255,0.6);
+  }
+  .topspace {
+     margin-top: 60px;
+   }
+  .resources {
+     line-height: 60vh;
+     text-align: center;
+   }
+   .page-loader {
+     position: absolute;
+     left:0;
+     bottom:0;
+     width:100vw;
+     height: 65vh;
+   }
+</style>
+
+</head>
+<body>
+
+<div class="wrapper">
+<span id="nav-title">Planner</span>
+<header class="nav">
+  <button onclick="changeScreen('planner');" id="home">Planner</button>
+  <button onclick="changeScreen('classes');" id="classes">Classes</button>
+  <button onclick="changeScreen('resources');" id="resources">Resources</button>
+</header>
+</div>
+<div class="planner content">
+  <div class="days">
+    <span id="m">Monday</span>
+    <span id="t">Tuesday</span>
+    <span id="w">Wednesday</span>
+    <span id="th">Thursday</span>
+    <span id="f">Friday</span>
+  </div>
+  <div class="notes">
+    <textarea spellcheck="off" resize="no" id="m-t"></textarea>
+    <textarea spellcheck="off" id="t-t"></textarea>
+    <textarea spellcheck="off" id="w-t"></textarea>
+    <textarea spellcheck="off" id="th-t"></textarea>
+    <textarea spellcheck="off" id="f-t"></textarea>
+  </div>
+  <button id="save" onclick="updateAll();">Save</button>
+</div>
+<div class="classes content topspace" hidden>
+<ul id="class-list">
+
+<li>Intro to Design - Engineering |<b> <a onclick="openIniFrame('https://guhsd.schoology.com/course/2712391340/materials')"  href="javascript:void(0)">Mr. Sklenicka</a></b></li>
+<li>English 3/4C |<b> <a onclick="openIniFrame('https://guhsd.schoology.com/course/2712224209/materials')"  href="javascript:void(0)">Mrs. Edwards</a></b></li>
+<li>Spanish 1/2C |<b> <a onclick="openIniFrame('https://guhsd.schoology.com/course/2712260739/materials')"  href="javascript:void(0)">Profe Rafenstein</a></b></li>
+<li>Math 3H |<b> <a onclick="openIniFrame('https://guhsd.schoology.com/course/2712578474/materials')"  href="javascript:void(0)">Mrs. Dissenger</a></b></li>
+<li>World History C |<b> <a onclick="openIniFrame('https://guhsd.schoology.com/course/2712562074/materials')"  href="javascript:void(0)">Mrs. Young</a></b></li>
+<li>Chemistry 1H |<b> <a onclick="openIniFrame('https://guhsd.schoology.com/course/2712578170/materials')"  href="javascript:void(0)">Ms. Addy </a></b></li>
+
+</ul>
+<iframe class="page-loader"></iframe>
+</div>
+<div class="resources content topspace" hidden>
+
+<h2>Coming soon... or whenever I decide to do it.</h2>
+
+</div>
+<div class="footer">
+  <div id="info"><b>
+    Jacob McGinley <br/>
+    WHHS Student <br/>
+    Class of 2023
+  </b></div>
+</div>
+
+</body>
+<script>
+
+window.onload = function() {
+
+var planner = localStorage.getItem("planner").split("ß");
+
+planner.forEach(function(e) {
+
+if(!e) {
+ e = "";
+}
+
+});
+
+document.querySelector("#m-t").value = planner[0];
+document.querySelector("#t-t").value = planner[1];
+document.querySelector("#w-t").value = planner[2];
+document.querySelector("#th-t").value = planner[3];
+document.querySelector("#f-t").value = planner[4];
+
+}
+
+var mon = null;
+var tues = null;
+var thurs = null;
+var wed = null;
+var fri = null;
+
+
+function updateAll() {
+mon = document.querySelector("#m-t").value;
+tues = document.querySelector("#t-t").value;
+wed = document.querySelector("#w-t").value;
+thurs = document.querySelector("#th-t").value;
+fri = document.querySelector("#f-t").value;
+
+localStorage.setItem("planner",mon+"ß"+tues+"ß"+wed+"ß"+thurs+"ß"+fri);
+}
+
+function changeScreen(e) {
+
+  e = e.toString();
+
+  document.querySelectorAll(".content").forEach(function(e){ e.hidden = true; });
+
+  document.querySelector("."+e).hidden = false;
+
+}
+
+function openIniFrame(link) {
+
+link = link.toString();
+  document.querySelector(".page-loader").src = link;
+
+}
+
+</script>
+</html>
