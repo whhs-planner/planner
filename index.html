@@ -116,16 +116,19 @@ body {
   .topspace {
      margin-top: 60px;
    }
-  .resources {
-     line-height: 60vh;
-     text-align: center;
-   }
+    .resources {
+     line-height: 25px;
+    }
    .page-loader {
      position: absolute;
      left:0;
      bottom:0;
      width:100vw;
      height: 65vh;
+   }
+   a {
+     text-decoration: none;
+     color: blue;
    }
 </style>
 
@@ -172,7 +175,8 @@ body {
 </div>
 <div class="resources content topspace" hidden>
 
-<h2>Coming soon... or whenever I decide to do it.</h2>
+<div class="handler"></div>
+<button id="add-resource" onclick="resource('add');">+</button>
 
 </div>
 <div class="footer">
@@ -189,20 +193,12 @@ body {
 window.onload = function() {
 
 var planner = localStorage.getItem("planner").split("ß");
-
-planner.forEach(function(e) {
-
-if(!e) {
- e = "";
-}
-
-});
-
 document.querySelector("#m-t").value = planner[0];
 document.querySelector("#t-t").value = planner[1];
 document.querySelector("#w-t").value = planner[2];
 document.querySelector("#th-t").value = planner[3];
 document.querySelector("#f-t").value = planner[4];
+document.querySelector(".handler").innerHTML += localStorage.getItem("resourceContent").toString();
 
 }
 
@@ -219,7 +215,6 @@ tues = document.querySelector("#t-t").value;
 wed = document.querySelector("#w-t").value;
 thurs = document.querySelector("#th-t").value;
 fri = document.querySelector("#f-t").value;
-
 localStorage.setItem("planner",mon+"ß"+tues+"ß"+wed+"ß"+thurs+"ß"+fri);
 }
 
@@ -236,8 +231,46 @@ function changeScreen(e) {
 function openIniFrame(link) {
 
 link = link.toString();
-  document.querySelector(".page-loader").src = link;
+window.open(link,"_blank");
 
+}
+
+var resources = localStorage.getItem("resources");
+if(!resources){
+resources = 0;
+}
+
+
+function resource(action, id) {
+if (action == "add") {
+resources++;
+document.querySelector(".handler").innerHTML += decodeURI("%3Cspan%20id=%22resource-"+resources+"-edit%22%3E%3Cinput%20placeholder=%22Title%22%20id=%22resource-"+resources+"-title%22%3E%3Cinput%20placeholder=%22Link%22%20id=%22resource-"+resources+"-link%22%3E%3Cbutton%20onclick=%22resource('save','resource-"+resources+"');%22%20id=%22resource-"+resources+"-save%22%3ESave%3C/button%3E%3C/span%3E");
+}else if (action == "save") {
+var title = document.querySelector("#"+id+"-title").value.toString();
+var link = document.querySelector("#"+id+"-link").value.toString();
+document.querySelector("#"+id+"-edit").remove();
+document.querySelector(".handler").innerHTML += `<span id="resource-`+resources+`"><a target="_blank" href='${link}'>${title}</a><button style="margin-left: 5px;" onclick="resource('edit','resource-`+resources+`');" id="resource-`+resources+`-openEdit">Edit</button><button onclick="this.parentElement.remove();" id="resource-`+resources+`-delete">Delete</button><br/></span>`;
+localStorage.setItem("resourceContent",document.querySelector(".handler").innerHTML.toString());
+localStorage.setItem("resources",resources);
+}else if (action == "edit") {
+alert("Coming Soon");
+}else if (action == "delete"){
+}else{
+alert("Code is wrong");
+}
+}
+
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+localStorage.setItem("resourceContent",document.querySelector(".handler").innerHTML.toString());
+}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+localStorage.setItem("resourceContent",document.querySelector(".handler").innerHTML.toString());
 }
 
 </script>
