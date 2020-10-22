@@ -270,7 +270,7 @@ document.querySelector(".class-handler").innerHTML += `<span id="period-`+period
 var title = document.querySelector("#"+id+"-className").value.toString();
 var teach = document.querySelector("#"+id+"-teacherName").value.toString();
 var link = document.querySelector("#"+id+"-linkToPage").value.toString();
-document.querySelector(".class-handler").innerHTML += `<span id="period-`+period+`-inList">`+title+` | <b><a target="_blank" href="`+link+`">`+teach+`</a></b><button id="delete" onclick="this.parentElement.remove();">Delete</button><br/></span>`;
+document.querySelector(".class-handler").innerHTML += `<span id="period-`+period+`-inList">`+title+` | <b><a target="_blank" href="`+link+`">`+teach+`</a></b>ㅤ<button id="delete" onclick="this.parentElement.remove();">Delete</button><br/></span>`;
 localStorage.setItem("classContent",document.querySelector(".class-handler").innerHTML.toString());
 localStorage.setItem("period",period);
 document.querySelector("#"+id).remove();
