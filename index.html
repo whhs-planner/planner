@@ -118,6 +118,8 @@ body {
    }
     .resources {
      line-height: 25px;
+    }.classes {
+     line-height: 25px;
     }
    .page-loader {
      position: absolute;
@@ -163,7 +165,8 @@ body {
 <div class="classes content topspace" hidden>
 <ul id="class-list">
 
- <h2> Coming soon... </h2>
+<div class="class-handler"></div>
+<button id="add-class" onclick="classHandle('add');">+</button>
 
 </ul>
 </div>
@@ -192,7 +195,8 @@ document.querySelector("#t-t").value = planner[1];
 document.querySelector("#w-t").value = planner[2];
 document.querySelector("#th-t").value = planner[3];
 document.querySelector("#f-t").value = planner[4];
-document.querySelector(".handler").innerHTML += localStorage.getItem("resourceContent").toString();
+document.querySelector(".handler").innerHTML = localStorage.getItem("resourceContent").toString();
+document.querySelector(".class-handler").innerHTML = localStorage.getItem("classContent").toString();
 
 }
 
@@ -248,15 +252,37 @@ localStorage.setItem("resourceContent",document.querySelector(".handler").innerH
 localStorage.setItem("resources",resources);
 }else if (action == "edit") {
 alert("Coming Soon");
-}else if (action == "delete"){
 }else{
 alert("Code is wrong");
 }
 }
 
+var period = localStorage.getItem("period");
+if(!period) {
+period = 0;
+}
+function classHandle(action, id) {
+if (action == "add") {
+period++;
+document.querySelector(".class-handler").innerHTML += `<span id="period-`+period+`"><input placeholder="Class Name" id="period-`+period+`-className"><input placeholder="Teacher Name" id="period-`+period+`-teacherName"><input placeholder="Class Link" id="period-`+period+`-linkToPage"><button onclick="classHandle('save','period-`+period+`');" id="class-save">Save</button><br/></span>`;
+}else if (action == "save") {
+var title = document.querySelector("#"+id+"-className").value.toString();
+var teach = document.querySelector("#"+id+"-teacherName").value.toString();
+var link = document.querySelector("#"+id+"-linkToPage").value.toString();
+document.querySelector(".class-handler").innerHTML += `<span id="period-`+period+`-inList">`+title+` | <b><a href="`+link+`">`+teach+`</a></b><button id="delete" onclick="this.parentElement.remove();">Delete</button><br/></span>`;
+localStorage.setItem("classContent",document.querySelector(".class-handler").innerHTML.toString());
+localStorage.setItem("period",period);
+document.querySelector("#"+id).remove();
+}else{
+alert("Code is wrong");
+}
+}
+
+
 Element.prototype.remove = function() {
     this.parentElement.removeChild(this);
 localStorage.setItem("resourceContent",document.querySelector(".handler").innerHTML.toString());
+localStorage.setItem("classContent",document.querySelector(".class-handler").innerHTML.toString());
 }
 NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
     for(var i = this.length - 1; i >= 0; i--) {
@@ -265,6 +291,8 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
         }
     }
 localStorage.setItem("resourceContent",document.querySelector(".handler").innerHTML.toString());
+localStorage.setItem("classContent",document.querySelector(".class-handler").innerHTML.toString());
+
 }
 
 </script>
