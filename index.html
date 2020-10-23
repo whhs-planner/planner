@@ -253,7 +253,7 @@ resources = 0;
 function resource(action, id) {
 if (action == "add") {
 resources++;
-document.querySelector(".handler").innerHTML += `<span id=`resource-`+resources+`-edit`><input placeholder="Title" id="resource-`+resources+`-title"><input placeholder="Link" id="resource-`+resources+`-link"><button onclick="resource('save','resource-`+resources+`');" id="resource-`+resources+`-save">Save</button><button onclick="this.parentElement.remove();">Cancel</button></span>`
+document.querySelector(".handler").innerHTML += `<span id="resource-`+resources+`-edit"><input placeholder="Title" id="resource-`+resources+`-title"><input placeholder="Link" id="resource-`+resources+`-link"><button onclick="resource('save','resource-`+resources+`');" id="resource-`+resources+`-save">Save</button><button onclick="this.parentElement.remove();">Cancel</button></span>`
 }else if (action == "save") {
 var title = document.querySelector("#"+id+"-title").value.toString();
 var link = document.querySelector("#"+id+"-link").value.toString();
