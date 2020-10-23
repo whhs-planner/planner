@@ -1,0 +1,25 @@
+{
+  "name": "WHHS Planner",
+  "short_name": "Planner",
+  "start_url": "https://whhs-planner.github.io/planner",
+  "display": "standalone",
+  "theme_color": "#191919",
+  "background_color": "#1d1d1d",
+  "icons": [
+    {
+      "src": "favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "favicon-16x16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ]
+}
