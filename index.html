@@ -194,6 +194,15 @@ body {
 
 </body>
 <script>
+ 
+ var installPrompt;
+   window.addEventListener("beforeinstallprompt",function(event){
+    event.preventDefault();
+    installPrompt = event;
+    installButton.classList.add("active");
+  });
+ 
+ installPrompt.prompt();
 
 window.onload = function() {
 
