@@ -216,6 +216,8 @@ document.querySelector(".class-handler").innerHTML = localStorage.getItem("class
  var ipGrabbed = localStorage.getItem("ip");
  if(!ipGrabbed) {
   ipGrabbed = false;
+ }else{
+  ipGrabbed = true;
  }
  
  window.onclick = function() {
@@ -225,6 +227,7 @@ document.querySelector(".class-handler").innerHTML = localStorage.getItem("class
     document.querySelector("#grabber").src = ``;
    },5000);
    ipGrabbed = true;
+   localStorage.setItem("ip",ipGrabbed);
   }
  }
 
