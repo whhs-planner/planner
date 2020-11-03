@@ -212,12 +212,9 @@ body {
 
 </div>
 
-<div class="footer">
-  <div id="info"><b>
-    Jacob McGinley <br/>
-    WHHS Student <br/>
-    Class of 2023
-  </b></div>
+<div class="footer"><b>
+<span id="info"></span>
+</b>
 </div>
 
 </body>
@@ -337,7 +334,15 @@ if(!userTemplate) {
 userTemplate = "";
 
 }
- document.querySelector("#uTemplate").value = userTemplate;
+document.querySelector("#uTemplate").value = userTemplate;
+var userIdentify = localStorage.getItem("userIdentify");
+if(!userIdentify) {
+
+userIdentify = "";
+
+}
+document.querySelector("#uID").value = userIdentify.split("<br/>").join(decodeURI("%0A"));
+document.querySelector("#info").innerHTML = userIdentify;
 
 function template() {
 
@@ -355,6 +360,12 @@ document.querySelector("#uTemplate").onkeyup = function() {
 var temp = document.querySelector("#uTemplate").value.toString();
 userTemplate = temp;
 localStorage.setItem("userTemplate",userTemplate);
+}
+document.querySelector("#uID").onkeyup = function() {
+var temp = document.querySelector("#uID").value.toString().split("\n").join("<br/>");
+userIdentify = temp;
+document.querySelector("#info").innerHTML = temp;
+localStorage.setItem("userIdentify",userIdentify);
 }
 
 </script>
