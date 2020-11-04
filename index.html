@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -135,6 +136,7 @@ body {
      }
     .settings {
        margin-left:20px;
+       height: calc(100vh - 60px);
      }
     #uTempTitle {
        margin-left: 5vw;
@@ -158,9 +160,14 @@ body {
       right:10px;
    }
    #uIDTitle {
-     position: relative;
-     bottom:555px;
-     left: 200px;
+     margin-left: calc((100vw / 5) + 50px);
+     position:relative;
+     bottom: 78.45vh;
+   }
+   #uID {
+     margin-left: calc((100vw / 5) - 5px);
+     position:relative;
+     bottom: 78.45vh;
    }
 </style>
 
@@ -211,8 +218,8 @@ body {
 <div class="settings content topspace" hidden>
 
 <span id="uTempTitle">Template</span><br/>
-<textarea id="uTemplate"></textarea>
-<span id="uIDTitle">User Identification</span>
+<textarea id="uTemplate"></textarea><br/>
+<span id="uIDTitle">User Identification</span><br/>
 <textarea id="uID"></textarea>
 
 </div>
