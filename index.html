@@ -369,20 +369,22 @@ alert("Code is wrong");
 }
 
 
-Element.prototype.remove = function() {
+Element.prototype.remove = function(clear) {
     this.parentElement.removeChild(this);
+if(clear != false){
 localStorage.setItem("resourceContent",document.querySelector(".handler").innerHTML.toString());
 localStorage.setItem("classContent",document.querySelector(".class-handler").innerHTML.toString());
-}
-NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+}}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function(clear) {
     for(var i = this.length - 1; i >= 0; i--) {
         if(this[i] && this[i].parentElement) {
             this[i].parentElement.removeChild(this[i]);
         }
     }
+if(clear != false){
 localStorage.setItem("resourceContent",document.querySelector(".handler").innerHTML.toString());
 localStorage.setItem("classContent",document.querySelector(".class-handler").innerHTML.toString());
-
+}
 }
 
 var userTemplate = localStorage.getItem("userTemplate");
