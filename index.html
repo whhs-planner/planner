@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -13,12 +14,13 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="manifest" href="manifest.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300&display=swap" rel="stylesheet">
 
 
 <style>
   *, *::before, *::after {
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
   }
   *:focus {
     outline: none;
@@ -156,8 +158,9 @@ body {
       margin-top: 70px;
     }
    #reset {
-      position:fixed;
-      right:10px;
+     position:fixed;
+     left: 17px;
+     width: calc(((100vw / 5) - 5px)*5 - 8px);
    }
    #uIDTitle {
      margin-left: calc((100vw / 5) + 50px);
@@ -169,10 +172,47 @@ body {
      position:relative;
      bottom: 78.45vh;
    }
+   #time {
+     position: fixed;
+     right: 10px;
+     top:12px;
+     font-size: 15px;
+   }
+   #loadingScreen{
+     position:fixed;
+     top:0;
+     left:0;
+     z-index: 1000;
+     width: 100vw;
+     height: 100vh;
+     background: white;
+     text-align: center;
+     line-height: 100vh;
+   }
+   #loadImage {
+     position:fixed;
+     left: calc(50vw - 32px);
+     width: 64px;
+     height: 64px;
+     border: none;
+     border-radius: 10px;
+   }
+   #loadingScreen span {
+     position: relative;
+     top:25px;
+     left:1px;
+   }
 </style>
 
 </head>
 <body>
+
+<div id="loadingScreen">
+
+<img id="loadImage" src="favicon-32x32.png">
+<span>Loading...</span>
+
+</div>
 
 <div class="wrapper">
 <span id="nav-title">Planner</span>
@@ -181,7 +221,7 @@ body {
   <button onclick="changeScreen('classes');" id="classes">Classes</button>
   <button onclick="changeScreen('resources');" id="resources">Resources</button>
   <button onclick="changeScreen('settings');" id="settings">Settings</button>
-  <button onclick="template();" id="reset">Reset</button>
+  <span id="time"></span>
 </header>
 </div>
 <div class="planner content">
@@ -199,6 +239,7 @@ body {
     <textarea spellcheck="off" id="th-t"></textarea>
     <textarea spellcheck="off" id="f-t"></textarea>
   </div>
+  <button onclick="template();" id="reset">Reset</button>
   <button id="save" onclick="updateAll();">Save</button>
 </div>
 <div class="classes content topspace" hidden>
@@ -233,6 +274,8 @@ body {
 <script>
 
 window.onload = function() {
+
+loadingScreen.remove();
 
 var planner = localStorage.getItem("planner").split("ß");
 document.querySelector("#m-t").value = planner[0];
@@ -379,6 +422,21 @@ userIdentify = temp;
 document.querySelector("#info").innerHTML = temp;
 localStorage.setItem("userIdentify",userIdentify);
 }
+
+function setTime() { window.requestAnimationFrame(setTime);
+
+var hour = parseInt(new Date().getHours());
+var minute = parseInt(new Date().getMinutes());
+var apm;
+
+(hour > 12) ? apm = "PM" : apm = "AM";
+(hour > 12) ? hour -= 12 : "";
+
+time.innerHTML = hour+":"+minute+" "+apm;
+
+}
+
+window.requestAnimationFrame(setTime);
 
 </script>
 </html>
