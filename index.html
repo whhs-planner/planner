@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -435,6 +436,7 @@ var apm;
 
 (hour > 12) ? apm = "PM" : apm = "AM";
 (hour > 12) ? hour -= 12 : "";
+(minute < 10) ? minute = "0" + minute : "";
 
 time.innerHTML = hour+":"+minute+" "+apm;
 
