@@ -92,8 +92,8 @@ body {
    position: fixed;
    right: 20px;
    bottom: 5px;
-   width: 100px;
-   height: 40px;
+   width: 150px;
+   height: 60px;
   }
   #info {
    position: fixed;
@@ -238,14 +238,13 @@ body {
     <span id="f">Friday</span>
   </div>
   <div class="notes">
-    <textarea spellcheck="off" resize="no" id="m-t"></textarea>
-    <textarea spellcheck="off" id="t-t"></textarea>
-    <textarea spellcheck="off" id="w-t"></textarea>
-    <textarea spellcheck="off" id="th-t"></textarea>
-    <textarea spellcheck="off" id="f-t"></textarea>
+    <textarea spellcheck="off" class="0" id="m-t"></textarea>
+    <textarea spellcheck="off" class="1" id="t-t"></textarea>
+    <textarea spellcheck="off" class="2" id="w-t"></textarea>
+    <textarea spellcheck="off" class="3" id="th-t"></textarea>
+    <textarea spellcheck="off" class="4" id="f-t"></textarea>
   </div>
-  <button onclick="template();" id="reset">Reset</button>
-  <button id="save" onclick="updateAll();">Save</button>
+  <button onclick="template();" id="save">Reset</button>
 </div>
 <div class="classes content topspace" hidden>
 <ul id="class-list">
@@ -420,10 +419,9 @@ document.querySelectorAll(".notes textarea").forEach(function(e) {
 
 var mustSave = false;
 
-save.onclick = function() { mustSave = false }
 document.querySelectorAll(".notes textarea").forEach( function(e){
   e.onkeyup = function() { 
-     mustSave = true;
+     updateAll();
   };
 });
 
