@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -417,6 +418,15 @@ document.querySelectorAll(".notes textarea").forEach(function(e) {
 }
 }
 
+var mustSave = false;
+
+save.onclick = function() { mustSave = false }
+document.querySelectorAll(".notes textarea").forEach( function(e){
+  e.onkeyup = function() { 
+     mustSave = true;
+  };
+});
+
 document.querySelector("#uTemplate").onkeyup = function() {
 var temp = document.querySelector("#uTemplate").value.toString();
 userTemplate = temp;
@@ -444,6 +454,15 @@ time.innerHTML = hour+":"+minute+" "+apm;
 }
 
 window.requestAnimationFrame(setTime);
+
+window.onbeforeunload = function(e) {
+e.preventDefault();
+(mustSave) ? e.returnValue = "Are you sure you want to leave? You have unsaved changes!" : "";
+}
+document.onbeforeunload = function(e) {
+e.preventDefault();
+(mustSave) ? e.returnValue = "Are you sure you want to leave? You have unsaved changes!" : "";
+}
 
 </script>
 </html>
