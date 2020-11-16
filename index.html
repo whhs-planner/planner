@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -343,7 +344,20 @@ document.querySelector(".handler").innerHTML += `<span id="resource-`+resources+
 localStorage.setItem("resourceContent",document.querySelector(".handler").innerHTML.toString());
 localStorage.setItem("resources",resources);
 }else if (action == "edit") {
-alert("Coming Soon");
+var title = document.querySelector("#"+id+" a").innerHTML.toString();
+var link = document.querySelector("#"+id+" a").href.toString();
+var idNum = parseInt(id.toString().split("-")[1]);
+document.querySelector("#"+id).innerHTML = decodeURI("%3Cspan%20id=%22resource-"+idNum+"-edit%22%3E%3Cinput%20placeholder=%22Title%22%20id=%22resource-"+idNum+"-title%22%3E%3Cinput%20placeholder=%22Link%22%20id=%22resource-"+idNum+"-link%22%3E%3Cbutton%20onclick=%22resource('edit-save','resource-"+idNum+"');%22%20id=%22resource-"+idNum+"-save%22%3ESave%3C/button%3E%3Cbr/%3E%3C/span%3E");
+document.querySelector("#"+id+"-title").value = title.toString();
+document.querySelector("#"+id+"-link").value = link.toString();
+}else if (action == "edit-save") {
+var title = document.querySelector("#"+id+"-title").value.toString();
+var link = document.querySelector("#"+id+"-link").value.toString();
+var idNum = parseInt(id.toString().substring(id.toString().length-1,id.toString().length));
+document.querySelector("#"+id+"-edit").remove();
+document.querySelector("#"+id).innerHTML = `<span id="resource-`+idNum+`"><a target="_blank" href='${link}'>${title}</a><button style="margin-left: 5px;" onclick="resource('edit','resource-`+idNum+`');" id="resource-`+idNum+`-openEdit">Edit</button><button onclick="this.parentElement.remove();" id="resource-`+idNum+`-delete">Delete</button><br/></span>`;
+localStorage.setItem("resourceContent",document.querySelector(".handler").innerHTML.toString());
+localStorage.setItem("resources",resources);
 }else{
 alert("Code is wrong");
 }
