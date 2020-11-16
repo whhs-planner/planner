@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -24,6 +25,82 @@
   }
   *:focus {
     outline: none;
+  }
+:root {
+    --primary-hue: 0;
+    --primary-sat: 0%;
+    --secondary-sat: calc(var(--primary-sat) * 0.5);
+    --tertiary-sat: calc(var(--primary-sat) * 0.125);
+
+    --main: hsl(var(--primary-hue),var(--primary-sat),7.1%);
+
+    --font-family-interface: -apple-system, BlinkMacSystemFont, "Rubik", sans-serif;
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Noto Sans", sans-serif;
+    --font-family-monospace: "Cousine", monospace;
+
+    --container-dark: hsl(var(--primary-hue),var(--primary-sat),9.8%);
+    --container-medium: hsl(var(--primary-hue),var(--primary-sat),11.4%);
+    --container-medium-hover: hsl(var(--primary-hue),var(--primary-sat),17.6%);
+
+    --text-dark: #000000;
+    --text-dark-contrast: hsl(var(--primary-hue),var(--tertiary-sat),20%);
+    --text-medium: hsl(var(--primary-hue),var(--tertiary-sat),66.7%);
+    --text-medium-contrast: hsl(var(--primary-hue),var(--tertiary-sat),80%);
+    --text-medium-additional: hsl(var(--primary-hue),var(--secondary-sat),46.7%);
+    --text-light: #ffffff;
+    --text-hover: #ffffff;
+
+    --border-radius-small: min(0.625vw, 2.5px);
+    --border-radius-medium: min(1.25vw, 5px);
+    --border-radius-large: min(2.5vw, 10px);
+    --box-shadow: #000000bf;
+    --outline-dark: var(--text-dark-contrast);
+    --outline-medium: var(--text-medium-contrast);
+
+    --transition-slow: 0.5s;
+    --transition-medium: 0.25s;
+    --transition-fast: 0.125s;
+    --transition-delay: 0.5s;
+
+    --selection-color: #000000;
+    --selection-background: #b4d5ffbf;
+
+    --scrollbar: hsl(var(--primary-hue),var(--secondary-sat),47.8%);
+    --scrollbar-hover: hsl(var(--primary-hue),var(--secondary-sat),60.4%);
+
+    --button: hsl(var(--primary-hue),var(--secondary-sat),22.7%);
+    --button-hover: hsl(var(--primary-hue),var(--secondary-sat),29%);
+    --button-warning-hover: #bb2222;
+
+    --tab: hsl(var(--primary-hue),var(--secondary-sat),15.3%);
+    --tab-hover: hsl(var(--primary-hue),var(--secondary-sat),21.6%);
+
+    --textarea-code-color: var(--text-light);
+    --textarea-dark: hsl(var(--primary-hue),var(--secondary-sat),12.2%);
+    --textarea-medium: hsl(var(--primary-hue),var(--secondary-sat),14.5%);
+    --textarea-light: #eae2d1;
+    --textarea-drag-hue: 240;
+    --textarea-drag-background: hsla(var(--textarea-drag-hue),100%,50%,25%);
+    --textarea-drag-border: hsl(var(--textarea-drag-hue),100%,50%);
+
+    --range-thumb: var(--button);
+    --range-thumb-hover: var(--button-hover);
+    --range-track: hsl(var(--primary-hue),var(--secondary-sat),12.5%);
+    --range-track-hover: hsl(var(--primary-hue),var(--secondary-sat),18.8%);
+
+    --card-backdrop: #19191960;
+
+    --startup-fade-opacity: 0;
+    --startup-fade-pointer-events: none;
+  }
+  :root.reduced-motion, :root.startup-fade {
+    --transition-slow: 0s;
+    --transition-medium: 0s;
+    --transition-fast: 0s
+  }
+  :root.startup-fade {
+    --startup-fade-opacity: 1;
+    --startup-fade-pointer-events: all;
   }
   .days span {
     position:relative;
@@ -56,17 +133,36 @@
     width: calc((100vw / 5) - 5px);
     margin-left:-6px;
     overflow-wrap: normal;
-    scrollbar-width: inherit;
-    scrollbar-color: inherit;
+    overflow: auto;
+
+  }
+textarea::-webkit-scrollbar {
+    width: min(3vw, 12px);
+    height: min(3vw, 12px);
+  }
+  textarea::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
+    background: none;
+  }
+  textarea::-webkit-scrollbar-thumb {
+    width: min(9vw, 36px);
+    height: min(9vw, 36px);
+    background-clip: content-box;
+    background-color: var(--scrollbar);
+    border: min(0.5vw, 2px) solid transparent;
+    border-radius: var(--border-radius-large);
+  }
+  textarea::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-hover);
   }
 
 body {
--webkit-touch-callout: none; /* iOS Safari */
+  -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
        -moz-user-select: none; /* Old versions of Firefox */
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none;
+ overflow-x: hidden;
 }
 
   .wrapper {
