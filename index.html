@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -102,29 +101,42 @@
     --startup-fade-opacity: 1;
     --startup-fade-pointer-events: all;
   }
-  .days span {
-    position:relative;
-    padding: 5px;
-    padding-left: 0;
+  .days {
+    position:absolute;
     font-size: 15px;
-    text-align: center;
+    left: 15px;
+    width: calc(100vw - 5px);
   }
+  .days div {
+    position:relative;
+    text-align: center;
+   }
   #m {
-    left: 6vw;
+    width: calc((100vw / 5) - 5px);
   }
   #t {
-    left: 20vw
+    width: calc((100vw / 5) - 5px);
+    top: calc((-17px) * 1);
+    left: calc(((100vw / 5) - 5px) * 1);
   }
   #w {
-    left: 34vw
+    width: calc((100vw / 5) - 5px);
+    top: calc((-17.5px) * 2);
+    left: calc(((100vw / 5) - 5px) * 2);
   }
   #th {
-    left: 48vw;
+    width: calc((100vw / 5) - 5px);
+    top: calc((-17.5px) * 3);
+    left: calc(((100vw / 5) - 6px) * 3);
   }
   #f {
-    left: 65vw;
+    width: calc((100vw / 5) - 5px);
+    top: calc((-17.5px) * 4);
+    left: calc(((100vw / 5) - 7px) * 4);
   }
   .notes {
+    position:relative;
+    top: 25px;
     padding: 0px 0px 0px 15px;
   }
   textarea {
@@ -328,11 +340,11 @@ body {
 </div>
 <div class="planner content">
   <div class="days">
-    <span id="m">Monday</span>
-    <span id="t">Tuesday</span>
-    <span id="w">Wednesday</span>
-    <span id="th">Thursday</span>
-    <span id="f">Friday</span>
+    <div id="m">Monday</div>
+    <div id="t">Tuesday</div>
+    <div id="w">Wednesday</div>
+    <div id="th">Thursday</div>
+    <div id="f">Friday</div>
   </div>
   <div class="notes">
     <textarea spellcheck="off" class="0" id="m-t"></textarea>
